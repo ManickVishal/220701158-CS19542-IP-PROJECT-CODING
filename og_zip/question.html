@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health and Suicide Prediction Quiz - Part 1</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="number"], select, input[type="radio"] {
+            margin-top: 5px;
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%27http://www.w3.org/2000/svg%27 width%3D%2716%27 height%3D%2716%27 viewBox%3D%270 0 16 16%27 fill%3D%27%23000%27%3E%3Cpath fill-rule%3D%27evenodd%27 d%3D%27M1.5 5a.5.5 0 0 1 .832-.374l5.5 5.5a.5.5 0 0 1-.664.748L1.5 5.748V5z%27/%3E%3C/svg%3E') no-repeat right;
+            background-size: 12px;
+        }
+
+        input[type="radio"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            input[type="number"], select, input[type="radio"] {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            button {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Mental Health and Suicide Prediction Quiz - Part 1</h1>
+    <form id="mentalHealthQuizPart1">
+        <div>
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age" min="15" max="100" placeholder="Enter your age" required>
+        </div>
+
+        <div>
+            <label for="gender">Gender:</label><br>
+            <select id="gender" name="gender" required>
+                <option value="">Select your gender...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="preferNotToSay">Prefer not to say</option>
+            </select>
+        </div>
+
+        <!-- Existing Questions -->
+        <div>
+            <label>Over the last 2 weeks, how often have you felt down, depressed, or hopeless?</label><br>
+            <input type="radio" id="notAtAll" name="depressionFrequency" value="0" required>
+            <label for="notAtAll">Not at all</label><br>
+            <input type="radio" id="severalDays" name="depressionFrequency" value="1">
+            <label for="severalDays">Several days</label><br>
+            <input type="radio" id="moreThanHalf" name="depressionFrequency" value="2">
+            <label for="moreThanHalf">More than half the days</label><br>
+            <input type="radio" id="nearlyEveryDay" name="depressionFrequency" value="3">
+            <label for="nearlyEveryDay">Nearly every day</label>
+        </div>
+
+        <div>
+            <label>Over the last 2 weeks, how often have you had thoughts of hurting yourself ?</label><br>
+            <input type="radio" id="notAtAllHarm" name="selfHarmThoughts" value="0" required>
+            <label for="notAtAllHarm">Not at all</label><br>
+            <input type="radio" id="severalDaysHarm" name="selfHarmThoughts" value="1">
+            <label for="severalDaysHarm">Several days</label><br>
+            <input type="radio" id="moreThanHalfHarm" name="selfHarmThoughts" value="2">
+            <label for="moreThanHalfHarm">More than half the days</label><br>
+            <input type="radio" id="nearlyEveryDayHarm" name="selfHarmThoughts" value="3">
+            <label for="nearlyEveryDayHarm">Nearly every day</label>
+        </div>
+
+        <!-- New Questions -->
+        <div>
+            <label>Over the last 2 weeks, how often have you felt anxious or on edge?</label><br>
+            <input type="radio" id="notAtAllAnxious" name="anxietyFrequency" value="0" required>
+            <label for="notAtAllAnxious">Not at all</label><br>
+            <input type="radio" id="severalDaysAnxious" name="anxietyFrequency" value="1">
+            <label for="severalDaysAnxious">Several days</label><br>
+            <input type="radio" id="moreThanHalfAnxious" name="anxietyFrequency" value="2">
+            <label for="moreThanHalfAnxious">More than half the days</label><br>
+            <input type="radio" id="nearlyEveryDayAnxious" name="anxietyFrequency" value="3">
+            <label for="nearlyEveryDayAnxious">Nearly every day</label>
+        </div>
+
+        <div>
+            <label>Over the last 2 weeks, how often have you felt you were a failure ?</label><br>
+            <input type="radio" id="notAtAllWorthless" name="worthlessnessFrequency" value="0" required>
+            <label for="notAtAllWorthless">Not at all</label><br>
+            <input type="radio" id="severalDaysWorthless" name="worthlessnessFrequency" value="1">
+            <label for="severalDaysWorthless">Several days</label><br>
+            <input type="radio" id="moreThanHalfWorthless" name="worthlessnessFrequency" value="2">
+            <label for="moreThanHalfWorthless">More than half the days</label><br>
+            <input type="radio" id="nearlyEveryDayWorthless" name="worthlessnessFrequency" value="3">
+            <label for="nearlyEveryDayWorthless">Nearly every day</label>
+        </div>
+
+        <div>
+            <label>Over the last 2 weeks, how often have you had trouble sleeping ?</label><br>
+            <input type="radio" id="notAtAllSleep" name="sleepFrequency" value="0" required>
+            <label for="notAtAllSleep">Not at all</label><br>
+            <input type="radio" id="severalDaysSleep" name="sleepFrequency" value="1">
+            <label for="severalDaysSleep">Several days</label><br>
+            <input type="radio" id="moreThanHalfSleep" name="sleepFrequency" value="2">
+            <label for="moreThanHalfSleep">More than half the days</label><br>
+            <input type="radio" id="nearlyEveryDaySleep" name="sleepFrequency" value="3">
+            <label for="nearlyEveryDaySleep">Nearly every day</label>
+        </div>
+
+        <div>
+            <button type="submit">Next</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('mentalHealthQuizPart1').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Collect the answers
+        const age = document.getElementById('age').value;
+        const gender = document.getElementById('gender').value;
+        const depressionFrequency = document.querySelector('input[name="depressionFrequency"]:checked').value;
+        const selfHarmThoughts = document.querySelector('input[name="selfHarmThoughts"]:checked').value;
+        const anxietyFrequency = document.querySelector('input[name="anxietyFrequency"]:checked').value;
+        const worthlessnessFrequency = document.querySelector('input[name="worthlessnessFrequency"]:checked').value;
+        const sleepFrequency = document.querySelector('input[name="sleepFrequency"]:checked').value;
+
+        // Store the answers in localStorage to pass them to the next page
+        localStorage.setItem('age', age);
+        localStorage.setItem('gender', gender);
+        localStorage.setItem('depressionFrequency', depressionFrequency);
+        localStorage.setItem('selfHarmThoughts', selfHarmThoughts);
+        localStorage.setItem('anxietyFrequency', anxietyFrequency);
+        localStorage.setItem('worthlessnessFrequency', worthlessnessFrequency);
+        localStorage.setItem('sleepFrequency', sleepFrequency);
+
+        // Redirect to out.html
+        window.location.href = 'out.html';
+    });
+</script>
+
+</body>
+</html>

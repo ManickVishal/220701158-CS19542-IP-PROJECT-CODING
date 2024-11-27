@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health and Suicide Prediction Results</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .result-box {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .high-risk {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #f5c6cb;
+        }
+
+        .moderate-risk {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 5px solid #ffeeba;
+        }
+
+        .low-risk {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 5px solid #c3e6cb;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .contact-info {
+            font-size: 16px;
+            background-color: #e2e3e5;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .chat-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .chat-box {
+            max-height: 200px;
+            overflow-y: auto;
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+        }
+
+        .chat-message {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            width: fit-content;
+            max-width: 70%;
+        }
+
+        .bot-message {
+            background-color: #e2e3e5;
+            color: #333;
+            margin-left: 0;
+        }
+
+        .user-message {
+            background-color: #4caf50;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-input button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .chat-input input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Your Mental Health Assessment</h1>
+    <div id="result"></div>
+</div>
+
+<div class="chat-container">
+    <div id="chatBox" class="chat-box"></div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your response here..." disabled>
+        <button id="sendButton" disabled>Send</button>
+    </div>
+</div>
+
+<script>
+    // Retrieve the answers from localStorage
+    const depressionFrequency = parseInt(localStorage.getItem('depressionFrequency'));
+    const selfHarmThoughts = parseInt(localStorage.getItem('selfHarmThoughts'));
+    const anxietyFrequency = parseInt(localStorage.getItem('anxietyFrequency'));
+    const worthlessnessFrequency = parseInt(localStorage.getItem('worthlessnessFrequency'));
+    const sleepFrequency = parseInt(localStorage.getItem('sleepFrequency'));
+
+    const resultDiv = document.getElementById('result');
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+
+    // Sum up the responses
+    const totalScore = depressionFrequency + selfHarmThoughts + anxietyFrequency + worthlessnessFrequency + sleepFrequency;
+
+    // Function to add message to the chatbox
+    function addChatMessage(message, sender) {
+        const chatMessage = document.createElement('div');
+        chatMessage.classList.add('chat-message', sender === 'bot' ? 'bot-message' : 'user-message');
+        chatMessage.textContent = message;
+        chatBox.appendChild(chatMessage);
+        chatBox.scrollTop = chatBox.scrollHeight; // Auto scroll to bottom
+    }
+
+    // Chatbot introduction
+    function startChat() {
+        addChatMessage("Hi, I'm here to support you. Do you need any further assistance or advice?", 'bot');
+        userInput.disabled = false;
+        sendButton.disabled = false;
+    }
+
+    // Event listener for the chat input
+    sendButton.addEventListener('click', function() {
+        const userText = userInput.value.trim();
+        if (userText === "") return;
+
+        addChatMessage(userText, 'user'); // Add user message
+
+        // Respond based on user input
+        if (userText.toLowerCase() === 'yes') {
+            addChatMessage("I'm glad you reached out. You can contact a professional at 1-800-123-4567 or talk to a trusted friend.", 'bot');
+        } else if (userText.toLowerCase() === 'no') {
+            addChatMessage("That's okay! Remember, we're always here if you need help. Take care of yourself.", 'bot');
+        } else {
+            addChatMessage("I didn't quite get that. Please respond with 'Yes' or 'No'.", 'bot');
+        }
+
+        userInput.value = ""; // Clear input after sending
+    });
+
+    // Determine the output based on the user's answers
+    let riskLevel;
+    if (totalScore >= 10) {
+        riskLevel = 'High Risk';
+        resultDiv.innerHTML = `
+            <div class="result-box high-risk">
+                <p><strong>It looks like you're going through a very tough time.</strong></p>
+                <p>We strongly encourage you to reach out to someone you trust or contact a mental health professional.</p>
+            </div>
+            <div class="contact-info">
+                <p>Here is a counselor's contact number: <strong>1-800-123-4567</strong>.</p>
+            </div>
+        `;
+    } else if (totalScore >= 5) {
+        riskLevel = 'Moderate Risk';
+        resultDiv.innerHTML = `
+            <div class="result-box moderate-risk">
+                <p><strong>You're going through a difficult period, but things can get better.</strong></p>
+            </div>
+            <p class="quote">"The greatest glory in living lies not in never falling, but in rising every time we fall." - Nelson Mandela</p>
+        `;
+    } else {
+        riskLevel = 'Low Risk';
+        resultDiv.innerHTML = `
+            <div class="result-box low-risk">
+                <p><strong>It seems like you're managing well, but it's okay to seek help whenever you need it.</strong></p>
+            </div>
+            <p class="quote">"Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle." - Christian D. Larson</p>
+        `;
+    }
+
+    // Send the data to the PHP server
+    fetch('store_results.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            'depressionFrequency': depressionFrequency,
+            'selfHarmThoughts': selfHarmThoughts,
+            'anxietyFrequency': anxietyFrequency,
+            'worthlessnessFrequency': worthlessnessFrequency,
+            'sleepFrequency': sleepFrequency,
+            'totalScore': totalScore,
+            'riskLevel': riskLevel
+        })
+    })
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+
+    // Start the chatbot conversation after showing the results
+    setTimeout(startChat, 1000); // Delay chatbot start by 1 second
+</script>
+
+</body>
+</html>
+
